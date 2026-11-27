@@ -429,3 +429,48 @@ The first contributions bullet mentions the corollary.
 **Lengths.**
 - The EJOR main file is 35 pp at 1.5 spacing, with about a third of the last page free.
 - The supplement is 13 pp, and the working draft 42 pp.
+
+### 6e. Fourth review pass: disclosure, two derivations, density (2026-11-27; review in `manuscript/submission_review_2026-11-27_pass4.md`)
+
+Pre-edit copies: `manuscript/archive/*_2026-11-27_pre-pass4-fixes.*`.
+
+**New results, each with a proof and a check.**
+- Remark 1 now derives the projection under plan-anchored promises. Without waiting, the schedule from the mean times is p + D, so pi_r = W_r (D_r - beta)^+ under ETA promises, and pi_r = 0 for D_r <= beta under day-definite promises. Check T20. On the Gate 2c data the routes with pi > 0 are exactly those with D > 60 min (13 = 13 at base noise, 117 = 117 at high noise, ETA, 35% check-in).
+- New Lemma 4 (Appendix A, after the proof of Corollary 4): the dispersion term under Gaussian deviations. It is sigma phi(z) for a promise projected to be met and sigma sqrt(2/pi) for one projected to be missed, and the error of the projected lateness is sigma L(|z|). Check T19. The text after Proposition 5 now uses it instead of a verbal claim. The Appendix B lemmas become Lemmas 5-7, and theory_checks.py and both READMEs are renumbered.
+- T1-T20 all pass.
+
+**Disclosures (no result changes).**
+- Tie-breaking (§4.3, §6.1): stable sort, i.e. file order. Breaking ties at random changes no reported efficiency by more than 0.029. The largest change over all 1,884 cell-score-capacity combinations is 0.061 (L2, DAY, phi = 0.10, 10%, not reported). Script `ties_mc_check.py`; outputs in `analysis/theory/ties_mc/`.
+- Monte Carlo (§4.3): L3 uses 256 prior scenarios on its own stream. L4 is the held-out estimate that also values Delta, so it shares its Monte Carlo error. Scoring L4 on the independent 48 optimization scenarios keeps at least 0.984 of its value (median 0.998, 56 cells at 5%). The oracle's restart from the earliest-deadline order and its 60-pass limit are now stated.
+- §5.2 and §7: the projection under plan-anchored promises is "uninformative", not "worse than the delay itself".
+
+**Wording.**
+- Intro: worst-case gap finite only over unrestricted delays.
+- CVaR at confidence level 1 - alpha.
+- mu-tilde defined once more generally.
+- "tracks" instead of "governed".
+- MAE "as a fraction of that mean".
+- Calibration caveat on the travel share.
+- Amplification "must come through", not measured.
+- 10% station-day capacity explained (90% of station-days have fewer than 30 routes).
+- Managerial bullet: 90-96% confirmatory and 81-94% across delay structures.
+- Highlight 4 limited to the window-driven gap.
+- Proof set T renamed \mathcal{T}.
+- Capacity sentence (2% and 10%) added to the Table 4 note.
+
+**Density.**
+- Theory contribution split into three sub-bullets.
+- §3.4 split into "Worst-case loss" and "Loss away from the worst case".
+- New Table 2 summarizes the theoretical results, replacing the long list in the paragraph after Assumption 1.
+- §5.3's bound evaluation is condensed around new Table 5 (bounds by cell set, from `avg_bound_summary.json` and `tail_bootstrap/check3c_cells.csv`). The table also reports, for completeness, the max-form projection bound on the delay-structure cells: Spearman 0.90.
+
+**EJOR length.** The additions brought the main file to 38 pp at 1.5 spacing (the pre-edit copy measures 35 pp the same way). `build_ejor.py` therefore gained two decisions:
+- **I:** the bound evaluation of §5.3 with its table moves to supplement S3, and the main file keeps `bounds_summary.tex`.
+- **J:** the large-fleet derivation after Corollary 3 moves to S1, after the proof of Corollary 3, and the main file keeps `large_fleet_summary.tex`.
+
+Supplement sections are now S1 proofs, S2 derivations, S3 bounds, S4 spread, S5 Gate 5 and S6 record.
+
+**Lengths.**
+- EJOR main: 35 pp at 1.5 spacing, about 2 lines free on the last page, so it is at the limit.
+- Supplement: 16 pp.
+- Working draft: 44 pp in house style.

@@ -1,5 +1,5 @@
-"""Numerical checks of the theory results, numbered as in manuscript.tex (Lemmas 1-6, Propositions 1-7,
-Corollaries 1-3). analysis/theory/proof_audit.md sections 1-3c used an older numbering; the map is in
+"""Numerical checks of the theory results, numbered as in manuscript.tex (Lemmas 1-7, Propositions 1-7,
+Corollaries 1-4, Remark 1). analysis/theory/proof_audit.md sections 1-3c used an older numbering; the map is in
 replication/README.md.
 
 T1  Representation: g_r(x) = integral_{-inf}^x G_r(y) dy, G_r = weighted CDF of effective slack Y = s - xi.
@@ -28,8 +28,8 @@ T13 Propositions 1 and 3 on a BOUNDED delay interval X, any K: the appendix cons
     the lower delay, no tie-breaking needed) give S_D = T + {r} and a loss within 1e-6 of the target gap.
 T14 Corollary 3 (large fleets): (x - t)^+ <= x^2 / (4t); Tbar_alpha(X) <= sqrt(alpha E X^2); and on a large
     i.i.d. fleet the loss per route is below Tbar_alpha(e+) + Tbar_alpha(e-) for a fixed nondecreasing g.
-T15 Lemma 4 (size of prediction errors): E|X - 1| = 2 (2 Phi(s/2) - 1) for X = exp(s Z - s^2/2), Monte Carlo.
-T16 Lemma 5 (random effects): E MSW = psi_leg^2 and E MSB = psi_leg^2 + J0 psi_route^2 on unbalanced groups,
+T15 Lemma 5 (size of prediction errors): E|X - 1| = 2 (2 Phi(s/2) - 1) for X = exp(s Z - s^2/2), Monte Carlo.
+T16 Lemma 6 (random effects): E MSW = psi_leg^2 and E MSB = psi_leg^2 + J0 psi_route^2 on unbalanced groups,
     Monte Carlo; and the estimator equals gate3_calibrate.re_decomp.
 
 Added 2026-11-27:
@@ -39,7 +39,14 @@ T18 Corollary 4 (projection from conditional means): on random fleets whose arri
     with waiting, under the empirical law of M scenarios (so every expectation is exact), the schedule from the
     mean times satisfies Ahat <= E A, hence pi <= rho, and the loss of the projection is <= T_m(tau) for every K;
     the tightness construction in the appendix gives a loss share 1 - eps / c of T_m(tau) = m max tau.
-(T10 already checks Lemma 6, the exact lognormal Var D formula, against Monte Carlo.)
+(T10 already checks Lemma 7, the exact lognormal Var D formula, against Monte Carlo.)
+
+Added 2026-11-27 (fourth review pass; Lemma 4 is new, so the appendix-B lemmas are now Lemmas 5-7):
+T19 Lemma 4 (dispersion term under Gaussian deviations): with A - Ahat ~ N(0, sigma^2) and projected slack z,
+    the term of tau_r is sigma phi(z) for z >= 0 and sigma sqrt(2/pi) for z < 0, and the error of the projected
+    lateness is sigma L(|z|), L(u) = phi(u) - u (1 - Phi(u)); Monte Carlo, plus 0 <= L <= phi and L decreasing.
+T20 Remark 1 (projection under plan-anchored promises): without waiting the schedule from the mean times is p + D,
+    so pi = W (D - beta)^+ under ETA promises and pi = 0 for D <= beta under day-definite promises.
 
 Deviations are Gaussian, so g_r has the closed form sum_i w_i sigma_i psi((x - m_i)/sigma_i),
 psi(z) = z Phi(z) + phi(z), m_i = s_i - mu_i.
@@ -472,7 +479,7 @@ def t15():
         cf = 2 * (2 * norm.cdf(s / 2) - 1)
         worst = max(worst, abs(mc - cf))
         ok &= abs(mc - cf) < 3e-3 and abs(cf - txt) < 5e-4 and abs(X.mean() - 1) < 3e-3
-    print(f"T15 Lemma 4: E|X - 1| closed form vs Monte Carlo max |diff| = {worst:.1e} -> {'PASS' if ok else 'FAIL'}")
+    print(f"T15 Lemma 5: E|X - 1| closed form vs Monte Carlo max |diff| = {worst:.1e} -> {'PASS' if ok else 'FAIL'}")
     return bool(ok)
 
 
@@ -492,7 +499,7 @@ def t16():
     ok = abs(np.mean(msw) / pl - 1) < 0.01 and abs(np.mean(msb) / (pl + J0 * pr) - 1) < 0.03
     out = re_decomp(z, grp)
     ok &= abs(out["kappa2"] - msw[-1]) < 1e-9 and abs(out["tau2"] - max(0.0, (msb[-1] - msw[-1]) / J0)) < 1e-9
-    print(f"T16 Lemma 5: E MSW / psi_leg^2 = {np.mean(msw) / pl:.3f}, E MSB / (psi_leg^2 + J0 psi_route^2) = "
+    print(f"T16 Lemma 6: E MSW / psi_leg^2 = {np.mean(msw) / pl:.3f}, E MSB / (psi_leg^2 + J0 psi_route^2) = "
           f"{np.mean(msb) / (pl + J0 * pr):.3f}; matches re_decomp -> {'PASS' if ok else 'FAIL'}")
     return bool(ok)
 
@@ -579,6 +586,58 @@ def t18():
     return bool(ok)
 
 
+def loss_fn(u):
+    """Standard normal loss function L(u) = phi(u) - u (1 - Phi(u)) = E (Z - u)^+."""
+    return norm.pdf(u) - u * norm.sf(u)
+
+
+def t19():
+    """Lemma 4: dispersion term and projection error of one promise when A - Ahat ~ N(0, sigma^2)."""
+    ok, worst = True, 0.0
+    Z = RNG.standard_normal(4_000_000)
+    for z in (-2.5, -1.0, -0.3, 0.0, 0.4, 1.0, 2.0, 3.0):
+        sigma = float(RNG.uniform(5, 30))
+        ahat, d = 100.0, 100.0 + z * sigma  # projected slack of z standard deviations
+        A = ahat + sigma * Z
+        tau_mc = float(np.mean(np.abs(A - ahat) * (np.maximum(A, ahat) > d)))
+        err_mc = float(np.mean(np.maximum(A - d, 0)) - max(ahat - d, 0.0))
+        tau_cf = sigma * norm.pdf(z) if z >= 0 else sigma * np.sqrt(2 / np.pi)
+        err_cf = sigma * loss_fn(abs(z))
+        worst = max(worst, abs(tau_mc - tau_cf) / sigma, abs(err_mc - err_cf) / sigma)
+        ok &= abs(tau_mc - tau_cf) < 2e-3 * sigma and abs(err_mc - err_cf) < 2e-3 * sigma
+        ok &= err_cf <= tau_cf + 1e-12 and (z >= 0 or err_cf <= sigma * norm.pdf(0) + 1e-12)
+    u = np.linspace(0, 6, 601)
+    ok &= bool(np.all(np.diff(loss_fn(u)) < 0)) and bool(np.all((loss_fn(u) >= 0) & (loss_fn(u) <= norm.pdf(u))))
+    print(f"T19 Lemma 4: Gaussian dispersion term and projection error, closed form vs Monte Carlo max |diff|/sigma = "
+          f"{worst:.1e}; L decreasing, 0 <= L <= phi -> {'PASS' if ok else 'FAIL'}")
+    return bool(ok)
+
+
+def t20():
+    """Remark 1: without waiting, the schedule from the mean times at check-in time P0 + D is p + D, so under ETA
+    promises (d = p + beta) pi = W (D - beta)^+, and under day-definite promises (d = P + beta) pi = 0 if D <= beta."""
+    ok, beta = True, 60.0
+    for _ in range(200):
+        n = int(RNG.integers(3, 40))
+        tbar, sbar = RNG.uniform(2, 25, n), RNG.uniform(1, 6, n)
+        P0 = float(RNG.uniform(0, 300))  # planned end of service at the stop just served
+        no_wait = np.zeros(n, bool)
+        p = schedule(P0, tbar, sbar, np.zeros(n), no_wait)  # planned arrivals at the remaining stops
+        P_end = p[-1] + sbar[-1]  # planned route end
+        w = RNG.integers(0, 2, n).astype(float)
+        for D in RNG.uniform(-90, 180, 5):
+            ahat = schedule(P0 + D, tbar, sbar, np.zeros(n), no_wait)
+            ok &= bool(np.allclose(ahat, p + D))
+            pi_eta = float(np.sum(w * np.maximum(ahat - (p + beta), 0)))
+            ok &= abs(pi_eta - w.sum() * max(D - beta, 0.0)) < 1e-8
+            pi_day = float(np.sum(w * np.maximum(ahat - (P_end + beta), 0)))
+            ok &= D > beta or pi_day == 0.0
+    print(f"T20 Remark 1: projection under ETA promises = W (D - beta)^+, under day-definite promises 0 for D <= beta "
+          f"-> {'PASS' if ok else 'FAIL'}")
+    return bool(ok)
+
+
 if __name__ == "__main__":
-    res = [t1(), t2(), t3(), t4(), t5(), t6(), t7(), t8(), t9(), t10(), t11(), t12(), t13(), t14(), t15(), t16(), t17(), t18()]
+    res = [t1(), t2(), t3(), t4(), t5(), t6(), t7(), t8(), t9(), t10(), t11(), t12(), t13(), t14(), t15(), t16(), t17(), t18(),
+           t19(), t20()]
     print("ALL PASS" if all(res) else "SOME CHECK FAILED")

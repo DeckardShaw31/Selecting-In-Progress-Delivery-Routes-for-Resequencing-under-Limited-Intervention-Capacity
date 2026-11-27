@@ -1,0 +1,10 @@
+{
+ "ties_cells_checked": 1884,
+ "ties_max_change_all": 0.060980422694365544,
+ "ties_worst_all": "['gate3_B', (0.0, 0.1, 'DAY', 'base', 0.35), 'L2_proj', np.float64(0.1)]",
+ "ties_max_change_reported": 0.02927898539428514,
+ "ties_worst_reported": "['gate2c', ('DAY', 'base', 0.35), 'L2', np.float64(0.05)]",
+ "mc_cells": 56,
+ "mc_min_ratio": 0.9842350057970314,
+ "mc_median_ratio": 0.9975915931562801
+}

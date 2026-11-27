@@ -4,8 +4,6 @@
 
 **Repository.** <https://github.com/DeckardShaw31/Selecting-In-Progress-Delivery-Routes-for-Resequencing-under-Limited-Intervention-Capacity>
 
-**Archive.** [TO FILL after the first release: Zenodo DOI]
-
 This package holds:
 - the code: simulator, resequencing oracle, gate and analysis scripts, and numerical checks of the theory;
 - the pre-specification documents of every experiment ("gate") and their change logs;
@@ -42,18 +40,19 @@ Section, table and figure numbers follow the journal version. "S" numbers refer 
 |---|---|---|
 | Triage target (§2, Remark 3) | Gate 1 | `gate1.py`, `analyze_gate1.py` |
 | Primary criterion on the evaluation split (§5.1) | Gate 2 | `gate1.py`, `analyze_gate2.py` |
-| Table 3, Figure 2, §5.1–5.3 | Gate 2c (confirmatory) | `gate1.py`, `analyze_gate2c.py --figures` |
-| Table 4 (delivery routes), §6 | Gate 2d | `konovalenko_io.py`, `gate2d.py`, `gate2d_robustness.py` |
+| Table 4, Figure 2, §5.1–5.3 | Gate 2c (confirmatory) | `gate1.py`, `analyze_gate2c.py --figures` |
+| Table 5 (delivery routes), §6 | Gate 2d | `konovalenko_io.py`, `gate2d.py`, `gate2d_robustness.py` |
 | §5.3–5.4, Figures 3–4 | Gate 3 (robustness) | `gate3_calibrate.py`, `gate3_sample.py`, `gate3_verify.py`, `gate3.py`, `analyze_gate3.py --figures` |
-| Tail-average bound (§5.3) | Check 3b | `avg_bound.py` |
-| Tail form of the projection bound (§5.3); bootstrap intervals (§4.3, §5.1, §5.4, note to Table 3) | Check 3c | `bootstrap_tail_check.py` |
+| Tail-average bound (§5.3; Section S3 and Table S1) | Check 3b | `avg_bound.py` |
+| Tail form of the projection bound (§5.3; Section S3 and Table S1); bootstrap intervals (§4.3, §5.1, §5.4, note to Table 4) | Check 3c | `bootstrap_tail_check.py` |
+| Tie-breaking and Monte Carlo diagnostics (§4.3) | Diagnostic, after the gates | `ties_mc_check.py` |
 | First-order route share (§5.4; equation S2.1) | Exploratory | `route_share_check.py` |
-| Exact check of the spread channel (Section S3) | Exploratory | `route_shock_check.py` |
-| Table 4 (pickup tasks), §6 | Gate 4 | `lade_io.py`, `gate4.py` |
-| §5.5 and Section S4 | Gate 5 | `gate5.py` (reuses the Gate 2c–4 results) |
+| Exact check of the spread channel (Section S4) | Exploratory | `route_shock_check.py` |
+| Table 5 (pickup tasks), §6 | Gate 4 | `lade_io.py`, `gate4.py` |
+| §5.5 and Section S5 | Gate 5 | `gate5.py` (reuses the Gate 2c–4 results) |
 | Figure 1 | — | `fig_exposure.py` |
-| Theory: Lemmas 1–6, Propositions 1–7, Corollaries 1–4 (proofs in Section S1) | Checks T1–T18 | `theory_checks.py`, `test_sim.py` |
-| Pre-specification record (Section S5) | — | `analysis/*/preregistration.md` and the specifications in `analysis/theory/` |
+| Theory: Lemmas 1–7, Propositions 1–7, Corollaries 1–4, Remark 1 (proofs in Section S1) | Checks T1–T20 | `theory_checks.py`, `test_sim.py` |
+| Pre-specification record (Section S6) | — | `analysis/*/preregistration.md` and the specifications in `analysis/theory/` |
 
 The figure scripts write a vector PDF and a 600 dpi PNG.
 
@@ -61,15 +60,18 @@ The figure scripts write a vector PDF and a 600 dpi PNG.
 
 | Check | Result | Check | Result |
 |---|---|---|---|
-| T1 | Lemma 1 | T10 | Proposition 7 and Lemma 6 |
-| T2 | Proposition 2 and Corollary 1 | T11 | Lemma 2 and the tail form of Proposition 5 |
-| T3 | Proposition 3 (worst case at K = 1) | T12 | Proposition 2 attained |
-| T4 | Proposition 5, route-level step | T13 | Propositions 1 and 3 on a bounded delay interval |
-| T5, T6 | Proposition 4 and its tightness | T14 | Corollary 3 |
-| T7 | Corollary 2 | T15 | Lemma 4 |
-| T8 | Lemma 3 | T16 | Lemma 5 |
-| T9 | Proposition 6 | T17 | Proposition 5 tight |
-| | | T18 | Corollary 4 and its tightness |
+| T1 | Lemma 1 | T11 | Lemma 2 and the tail form of Proposition 5 |
+| T2 | Proposition 2 and Corollary 1 | T12 | Proposition 2 attained |
+| T3 | Proposition 3 (worst case at K = 1) | T13 | Propositions 1 and 3 on a bounded delay interval |
+| T4 | Proposition 5, route-level step | T14 | Corollary 3 |
+| T5, T6 | Proposition 4 and its tightness | T15 | Lemma 5 |
+| T7 | Corollary 2 | T16 | Lemma 6 |
+| T8 | Lemma 3 | T17 | Proposition 5 tight |
+| T9 | Proposition 6 | T18 | Corollary 4 and its tightness |
+| T10 | Proposition 7 and Lemma 7 | T19 | Lemma 4 (dispersion term under Gaussian deviations) |
+| | | T20 | Remark 1 (projection under plan-anchored promises) |
+
+Lemma numbers are those of the working draft. In the Online Supplement, Lemmas 4–7 are Lemmas S1–S4.
 
 All checks pass (`python -I code/resequencing/theory_checks.py`, about five minutes).
 

@@ -1,0 +1,13 @@
+{
+ "share_tasks_late": 0.016953852973813358,
+ "share_tasks_early": 0.26254298632648077,
+ "window_width_min_median": 120.0,
+ "window_width_min_p5_p95": [
+  120.0,
+  120.0
+ ],
+ "tasks_per_courier_day_median": 30.0,
+ "known_remaining_median_f035": 10.0,
+ "unknown_share_median_f035": 0.3,
+ "routes_with_future_late_f035": 0.14598117780640654
+}

@@ -1,0 +1,22 @@
+{
+ "H7a_median_G_S1": 0.07127962884936641,
+ "H7a": false,
+ "H7b_worst_S1_minus_L1": -0.01824537052050823,
+ "H7b": true,
+ "outcome": "NOT SUPPORTED",
+ "H7rep_median_G_S1": 0.046431432500475184,
+ "H7rep": false,
+ "H7obs_LaDe_ci": [
+  0.0,
+  0.0
+ ],
+ "H7obs": false,
+ "Konovalenko_ci": [
+  -0.009358156572908524,
+  0.03463585374303303
+ ],
+ "secondary_median_G": {
+  "S2": 0.12441780133454414,
+  "S3": 0.07639537342788139
+ }
+}

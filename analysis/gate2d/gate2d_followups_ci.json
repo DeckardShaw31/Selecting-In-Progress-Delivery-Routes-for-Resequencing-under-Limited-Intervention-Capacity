@@ -1,0 +1,16 @@
+{
+ "secondary_count_all": [
+  0.07336178789070345,
+  0.1737300908046289
+ ],
+ "exploratory_minutes_clean": [
+  0.056942763812349466,
+  0.23653975116401413
+ ],
+ "exploratory_count_clean": [
+  0.07241195891415994,
+  0.17411378897878638
+ ],
+ "excluded_routes": 66,
+ "evaluation_routes": 6322
+}

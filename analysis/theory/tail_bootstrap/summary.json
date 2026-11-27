@@ -1,0 +1,51 @@
+{
+ "check3c": {
+  "P (W cells, sU = 0)": {
+   "cells": 28,
+   "spearman": 0.876847290640394,
+   "spearman_max_form": 0.5571975916803502,
+   "share_below_1": 0.35714285714285715,
+   "share_below_1_omega_ge_05": 0.8,
+   "share_below_1_omega_lt_05": 0.1111111111111111,
+   "median_ratio_bound_to_loss": 8.270640181567293,
+   "B_tail_range": [
+    0.43775618337613836,
+    2.2378894804363356
+   ]
+  },
+  "S1 (arm B)": {
+   "cells": 40,
+   "spearman": 0.8493433395872422,
+   "spearman_max_form": 0.9005628517823641,
+   "share_below_1": 0.35,
+   "share_below_1_omega_ge_05": 0.6363636363636364,
+   "share_below_1_omega_lt_05": 0.0,
+   "median_ratio_bound_to_loss": 9.854358326882176,
+   "B_tail_range": [
+    0.3668698013965656,
+    3.3172940693683506
+   ]
+  },
+  "S2 (arm A, sU > 0)": {
+   "cells": 36,
+   "spearman": 0.8102960102960104,
+   "spearman_max_form": 0.6622908622908623,
+   "share_below_1": 0.5277777777777778,
+   "share_below_1_omega_ge_05": 0.7142857142857143,
+   "share_below_1_omega_lt_05": 0.4090909090909091,
+   "median_ratio_bound_to_loss": 8.04451084342649,
+   "B_tail_range": [
+    0.648618961150355,
+    2.1795663297612666
+   ]
+  }
+ },
+ "gate2c_max_halfwidth": {
+  "L1": 0.09907388869112496,
+  "L2": 0.18290672343788233,
+  "L3": 0.04604405020453339,
+  "L2-L1": 0.16933046621530176
+ },
+ "B": 2000,
+ "seed": 2032
+}

@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the paper and this archive."
+type: software
+title: "Replication package for: Selecting In-Progress Delivery Routes for Resequencing under Limited Intervention Capacity"
+authors:
+  - family-names: "Nguyễn"
+    given-names: "Nhật Thanh"
+    affiliation: "International University, Vietnam National University, Ho Chi Minh City, Vietnam"
+version: "1.0.0"
+license: MIT
+repository-code: "https://github.com/DeckardShaw31/Selecting-In-Progress-Delivery-Routes-for-Resequencing-under-Limited-Intervention-Capacity"
+keywords:
+  - last-mile delivery
+  - real-time intervention
+  - capacity-limited triage
+  - priority rules
+  - stochastic routing
+  - pre-specified simulation
+abstract: >-
+  Code, pre-specification documents and derived results for a study of which in-progress
+  delivery routes a dispatcher should resequence when only a few can be changed at a time.
+  It compares behind-schedule triage with risk triage, a deterministic projection of the
+  remaining promises, and probabilistic forecasts, on real Amazon route structures and on
+  observed outcomes from Norway/Denmark and five Chinese cities.

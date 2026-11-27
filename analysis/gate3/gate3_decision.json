@@ -1,0 +1,22 @@
+{
+ "H5a_qualifying": 5,
+ "H5a_fails": 0,
+ "H5b": false,
+ "outcome": "GO-NARROW (forecast)",
+ "H3_series_met": 4,
+ "H3": true,
+ "H3D_value": 0.895257618710443,
+ "H3D": false,
+ "H4_spearman": 0.3278598795840175,
+ "H4_spearman_delta": 0.33497536945812806,
+ "H4": false,
+ "H6_value": 0.6606499467570549,
+ "H6": true,
+ "checks": {
+  "bound_i": true,
+  "bound_ii": true,
+  "route_ineq_ii": true
+ },
+ "H4_replication_gate2c_spearman": 0.2857142857142857,
+ "H4_replication_bound_i_holds": true
+}

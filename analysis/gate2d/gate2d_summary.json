@@ -1,0 +1,16 @@
+{
+ "eligible": 11626,
+ "calibration_routes": 5304,
+ "evaluation_routes": 6322,
+ "calibration_weeks": 16,
+ "pace_a_min": 19.31725208161977,
+ "pace_b_min_per_km": 1.6732512430478226,
+ "pace_r2": 0.2977328817355497,
+ "pace_legs": 77008,
+ "D1_ratio": 0.7717367053555019,
+ "D1_ci": [
+  -0.019627509139071738,
+  0.365834000170711
+ ],
+ "outcome": "CONSISTENT-WEAK"
+}

@@ -1,0 +1,8 @@
+# Python 3.13.11; versions used for the paper
+numpy==2.2.6
+scipy==1.16.3
+pandas==3.1.0
+numba==0.61.2
+scikit-learn==1.6.1
+matplotlib==3.10.8
+openpyxl==3.1.5
